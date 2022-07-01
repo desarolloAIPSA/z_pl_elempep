@@ -1,0 +1,452 @@
+<mvc:View
+    controllerName="aip.zplelempep.controller.Master"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout"
+    xmlns:t="sap.ui.table"
+    xmlns:c="sap.ui.core"
+>
+    <Page id="page" title="{i18n>MAIN_PAGE}">
+        <content>
+            <Panel id="_IDGenPanel1" accessibleRole="Region">
+                <t:Table id="_IDGenTable1"
+                    visibleRowCount="14"   
+                    class="sapUiResponsiveMargin"
+                    width="auto"
+                    rows="{oData>/results}"
+                    selectionMode="Single"
+                    enableBusyIndicator="true">
+                    <t:extension>
+                        <OverflowToolbar id="_IDGenOverflowToolbar1" class="sapUiSmallMarginBottom" >
+                            <content>
+                                <!-- Filtro Clave -->
+                                <Input id="txtClave" placeholder="Clave" width="10%" />
+                                <!-- Filtro Elemento PEP 
+                                <Input id="txtElementoPep" placeholder="Elemento PEP" width="17%"/>
+                                -->
+                                <!-- Filtro Desc campo 
+                                <Input id="txtDesCampo" placeholder="Desc.Campo" width="17%" />
+                                -->
+                                <!-- Filtro Frente de Cosecha (con matchcode) -->
+                                <Input id="txtFrenteCos" 
+                                    showValueHelp="true"
+                                    width="13%"
+                                    placeholder="Frente Cosecha"
+                                    liveChange="onChangeFrente"
+                                    valueHelpRequest="onOpenDialogPressFc" />
+                                <!-- Filtro Tipo Campo (con matchcode) -->
+                                <Input id="txtTipCampo" 
+                                    showValueHelp="true"
+                                    width="13%"
+                                    placeholder="Tipo Campo"
+                                    liveChange="onChangeTipo"
+                                    valueHelpRequest="onOpenDialogPressTc" />
+                                <!-- Filtro Etapa (con matchcode) -->
+                                <Input id="txtEtapa" 
+                                    showValueHelp="true"
+                                    width="10%"
+                                    placeholder="Etapa"
+                                    liveChange="onChangeEtapa"
+                                    valueHelpRequest="onOpenDialogPressEt" />
+                                <!-- Filtro rango fechas de nac
+                                <DateRangeSelection id="txtFechasNac" width="18%" placeholder="F.Nacimiento (rango)" />
+                                -->
+                                <!-- Filtro rango fechas fin cosecha
+                                <DateRangeSelection id="txtFechasFinCos" width="18%" placeholder="Fecha Fin Cos. (rango)" />
+                                -->
+                                <!-- Filtro  Proyecto (con matchcode) -->
+                                <Input id="txtProyecto" 
+                                    showValueHelp="true"
+                                    width="10%"
+                                    placeholder="Proyecto"
+                                    liveChange="onChangePry"
+                                    valueHelpRequest="onOpenDialogPressPry" />
+                                <!-- Filtro  Adm (con matchcode) -->
+                                <Input id="txtAdmin" 
+                                    showValueHelp="true"
+                                    width="10%"
+                                    placeholder="Administración"
+                                    liveChange="onChangeAdm"
+                                    valueHelpRequest="onOpenDialogPressAdm" />
+                                <!-- Filtro Zona-->
+                                <Input id="txtZona" 
+                                    showValueHelp="true"
+                                    width="10%"
+                                    placeholder="Zona"
+                                    liveChange="onChangeZona"
+                                    valueHelpRequest="onOpenDialogPressZn" />
+                                <!-- Filtro status -->
+                                <MultiComboBox id="mcboStatus" width="10%" placeholder="Estado"
+                                            items="{path: 'oStatusData>/items'	}">
+                                            <c:Item id="_IDGenItem1" key="{oStatusData>key}" text="{oStatusData>text}" />
+                                </MultiComboBox>
+                                <!-- Botón para acción de filtro -->
+                                <Button id="btnFiltro" 
+                                    icon="sap-icon://filter"
+                                    tooltip="{i18n>filterButtonText}"
+                                    press=".onFilterElempep"/>
+                                 <!-- Botón para exportar tabla en Excel -->
+                                <Button id="_IDGenButton2" 
+                                        icon="sap-icon://excel-attachment"
+                                        tooltip="{i18n>exportButtonText}"
+                                        press="onExport"/>
+                            </content>
+                        </OverflowToolbar>
+                        <!--
+                        <OverflowToolbar id="_IDGenOverflowToolbar2" class="sapUiSmallMarginBottom" >
+                            <content>
+                                <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                            </content>
+                        </OverflowToolbar>
+                        -->
+                    </t:extension>
+                    <t:columns>
+                        <!--
+                        <t:Column id="_IDGenColumn1" width="8rem" showSortMenuEntry="true" sortProperty="Pspnr">
+                            <Label id="_IDGenLabel1" text="{i18n>PSPNR}" tooltip="{i18n>ttPSPNR}" />
+                            <t:template>
+                                <Text id="_IDGenText1" text="{oData>Pspnr}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                        <t:Column id="_IDGenColumn2" width="5rem" showSortMenuEntry="true" sortProperty="Proyecto">
+                            <Label id="_IDGenLabel2" text="{i18n>PROYECTO}" tooltip="{i18n>ttPROYECTO}" />
+                            <t:template>
+                                <Text id="_IDGenText2" text="{oData>Proyecto}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn12" width="13rem" showSortMenuEntry="true" sortProperty="Posid">
+                            <Label id="_IDGenLabel12" text="{i18n>POSID}" tooltip="{i18n>ttPOSID}" />
+                            <t:template>
+                                <Text id="_IDGenText12" text="{oData>Posid}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <!--
+                        <t:Column id="_IDGenColumn3" width="5rem" showSortMenuEntry="true" sortProperty="Admin">
+                            <Label id="_IDGenLabel3" text="{i18n>ADMIN}" tooltip="{i18n>ttADMIN}" />
+                            <t:template>
+                                <Text id="_IDGenText3" text="{oData>Admin}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                        <t:Column id="_IDGenColumn41" width="14rem" showSortMenuEntry="true" sortProperty="DescAdm">
+                            <Label id="_IDGenLabel41" text="{i18n>DESCADMIN}" tooltip="{i18n>ttDESCADMIN}" />
+                            <t:template>
+                                <Text id="_IDGenText41" text="{oData>DescAdm}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <!--
+                        <t:Column id="_IDGenColumn4" width="4rem" showSortMenuEntry="true" sortProperty="Zona">
+                            <Label id="_IDGenLabel4" text="{i18n>ZONA}" tooltip="{i18n>ttZONA}" />
+                            <t:template>
+                                <Text id="_IDGenText4" text="{oData>Zona}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                        <t:Column id="_IDGenColumn42" width="10rem" showSortMenuEntry="true" sortProperty="DescZona">
+                            <Label id="_IDGenLabel42" text="{i18n>DESCZONA}" tooltip="{i18n>ttDESCZONA}" />
+                            <t:template>
+                                <Text id="_IDGenText42" text="{oData>DescZona}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn5" width="8rem" showSortMenuEntry="true" sortProperty="FrenteCos">
+                            <Label id="_IDGenLabel5" text="{i18n>FRENTECOS}" tooltip="{i18n>ttFRENTECOS}" />
+                            <t:template>
+                                <Text id="_IDGenText5" text="{oData>FrenteCos}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn6" width="4rem" showSortMenuEntry="true" sortProperty="Tipcampo">
+                            <Label id="_IDGenLabel6" text="{i18n>TIPCAMPO}" tooltip="{i18n>ttTIPCAMPO}" />
+                            <t:template>
+                                <Text id="_IDGenText6" text="{oData>Tipcampo}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn10" width="4rem" showSortMenuEntry="true" sortProperty="Etapa">
+                            <Label id="_IDGenLabel10" text="{i18n>ETAPA}" tooltip="{i18n>ttETAPA}" />
+                            <t:template>
+                                <Text id="_IDGenText10" text="{oData>Etapa}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn40" width="6rem" showSortMenuEntry="true" sortProperty="CampoQuiebre">
+                            <Label id="_IDGenLabel40" text="{i18n>CAM_QUIEBRE}" tooltip="{i18n>ttCAM_QUIEBRE}" />
+                            <t:template>
+                                <Text id="_IDGenText40" text="{oData>CampoQuieb}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn35" width="8rem" showSortMenuEntry="true" sortProperty="Status2">
+                            <Label id="_IDGenLabel35" text="{i18n>STATUS}" tooltip="{i18n>ttSTATUS}" />
+                            <t:template>
+                                <Text id="_IDGenText35" text="{oData>Status2}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <!--
+                        <t:Column id="_IDGenColumn43" width="8rem" showSortMenuEntry="true" sortProperty="Status1">
+                            <Label id="_IDGenLabel43" text="{i18n>STATUS1}" tooltip="{i18n>ttSTATUS1}" />
+                            <t:template>
+                                <Text id="_IDGenText43" text="{oData>Status1}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                        <t:Column id="_IDGenColumn44" width="8rem" showSortMenuEntry="true" sortProperty="Clave">
+                            <Label id="_IDGenLabel44" text="{i18n>CLAVE}" tooltip="{i18n>ttCLAVE}" />
+                            <t:template>
+                                <Text id="_IDGenText44" text="{oData>Clave}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn9" width="12rem" showSortMenuEntry="true" sortProperty="DescCampo">
+                            <Label id="_IDGenLabel9" text="{i18n>DESCCAMPO}" tooltip="{i18n>ttDESCCAMPO}" />
+                            <t:template>
+                                <Text id="_IDGenText9" text="{oData>DescCampo}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn16" width="8rem" showSortMenuEntry="true" sortProperty="Usr04">
+                            <Label id="_IDGenLabel16" text="{i18n>USR04}" tooltip="{i18n>ttUSR04}" />
+                            <t:template>
+                                <ObjectNumber id="_IDGenText16"
+                                            textAlign="End" 
+                                            number="{ path: 'oData>Usr04',
+                                                      formatter: '.formatter.numero2d'  }" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn17" width="8rem" showSortMenuEntry="true" sortProperty="HasNetas">
+                            <Label id="_IDGenLabel17" text="{i18n>HASNETAS}" tooltip="{i18n>ttHASNETAS}" />
+                            <t:template>
+                                <ObjectNumber id="_IDGenText17"
+                                            textAlign="End" 
+                                            number="{ path: 'oData>HasNetas',
+                                                      formatter: '.formatter.numero2d'  }" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn18" width="8rem" showSortMenuEntry="true" sortProperty="Variedad">
+                            <Label id="_IDGenLabel18" text="{i18n>VARIEDAD}" tooltip="{i18n>ttVARIEDAD}" />
+                            <t:template>
+                                <Text id="_IDGenText18" text="{oData>Variedad}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn45" width="4rem" showSortMenuEntry="true" sortProperty="NroCorte">
+                            <Label id="_IDGenLabel45" text="{i18n>NROCORTE}" tooltip="{i18n>ttNROCORTE}" />
+                            <t:template>
+                                <Text id="_IDGenText45" text="{oData>NroCorte}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <!--
+                        <t:Column id="_IDGenColumn24" width="4rem" showSortMenuEntry="true" sortProperty="TipoSuelo">
+                            <Label id="_IDGenLabel24" text="{i18n>TIPOSUELO}" tooltip="{i18n>ttTIPOSUELO}" />
+                            <t:template>
+                                <Text id="_IDGenText24" text="{oData>TipoSuelo}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                        <t:Column id="_IDGenColumn51" width="8rem" showSortMenuEntry="true" sortProperty="Tipsuelo">
+                            <Label id="_IDGenLabel51" text="{i18n>TIPOSUELO}" tooltip="{i18n>ttTIPOSUELO}" />
+                            <t:template>
+                                <Text id="_IDGenText51" text="{oData>Tipsuelo}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <!--
+                        <t:Column id="_IDGenColumn24" width="8rem" showSortMenuEntry="true" sortProperty="TipoSuelo">
+                            <Label id="_IDGenLabel24" text="{i18n>TIPOSUELO}" tooltip="{i18n>ttTIPOSUELO}" />
+                            <t:template>
+                                <ObjectNumber id="_IDGenText24"
+                                            textAlign="End" 
+                                            number="{ path: 'oData>TipoSuelo',
+                                                      formatter: '.formatter.conNumero'}" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                        <t:Column id="_IDGenColumn11" width="8rem" showSortMenuEntry="true" sortProperty="FecNacPlnt">
+                            <Label id="_IDGenLabel11" text="{i18n>FECNACPLNT}" tooltip="{i18n>ttFECNACPLNT}" />
+                            <t:template>
+                                <Text id="_IDGenText11" text="{ path : 'oData>FecNacPlnt',
+                                                                type : 'sap.ui.model.type.Date' }" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn19" width="8rem" showSortMenuEntry="true" sortProperty="Edad">
+                            <Label id="_IDGenLabel19" text="{i18n>EDAD}" tooltip="{i18n>ttEDAD}" />
+                            <t:template>
+                                <ObjectNumber id="_IDGenText19"
+                                            textAlign="End" 
+                                            number="{ path: 'oData>Edad',
+                                                      formatter: '.formatter.numero2d'  }" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn26" width="8rem" showSortMenuEntry="true" sortProperty="ZzKmdist">
+                            <Label id="_IDGenLabel26" text="{i18n>ZZKMDIST}" tooltip="{i18n>ttZZKMDIST}" />
+                            <t:template>
+                                <ObjectNumber id="_IDGenText26"
+                                            textAlign="End" 
+                                            number="{ path: 'oData>ZzKmdist',
+                                                      formatter: '.formatter.numero2d'  }" />
+                            </t:template>
+                        </t:Column>
+                        <!--
+                        <t:Column id="_IDGenColumn23" width="8rem" showSortMenuEntry="true" sortProperty="FecIniAgoste">
+                            <Label id="_IDGenLabel23" text="{i18n>FECINIAGOSTE}" tooltip="{i18n>ttFECINIAGOSTE}" />
+                            <t:template>
+                                <Text id="_IDGenText23" text="{ path : 'oData>FecIniAgoste',
+                                                                type : 'sap.ui.model.type.Date' }" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn22" width="8rem" showSortMenuEntry="true" sortProperty="FecMadurante">
+                            <Label id="_IDGenLabel22" text="{i18n>FECMADURANTE}" tooltip="{i18n>ttFECMADURANTE}" />
+                            <t:template>
+                                <Text id="_IDGenText22" text="{ path : 'oData>FecMadurante',
+                                                                type : 'sap.ui.model.type.Date' }" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn25" width="8rem" showSortMenuEntry="true" sortProperty="Finicos">
+                            <Label id="_IDGenLabel25" text="{i18n>FINICOS}" tooltip="{i18n>ttFINICOS}" />
+                            <t:template>
+                                <Text id="_IDGenText25" text="{ path : 'oData>Finicos',
+                                                                type : 'sap.ui.model.type.Date' }" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn21" width="8rem" showSortMenuEntry="true" sortProperty="RendEsp">
+                            <Label id="_IDGenLabel21" text="{i18n>RENDESP}" tooltip="{i18n>ttRENDESP}" />
+                            <t:template>
+                                <ObjectNumber id="_IDGenText21"
+                                            textAlign="End" 
+                                            number="{ path: 'oData>RendEsp',
+                                                      formatter: '.formatter.numero2d'  }" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn20" width="8rem" showSortMenuEntry="true" sortProperty="SacEsp">
+                            <Label id="_IDGenLabel20" text="{i18n>SACESP}" tooltip="{i18n>ttSACESP}" />
+                            <t:template>
+                                <ObjectNumber id="_IDGenText20"
+                                            textAlign="End" 
+                                            number="{ path: 'oData>SacEsp',
+                                                      formatter: '.formatter.numero2d'  }" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                        <!--
+                        <t:Column id="_IDGenColumn31" width="8rem" showSortMenuEntry="true" sortProperty="CodFuente">
+                            <Label id="_IDGenLabel31" text="{i18n>CODFUENTE}" tooltip="{i18n>ttCODFUENTE}" />
+                            <t:template>
+                                <Text id="_IDGenText31" text="{oData>CodFuente}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                        <t:Column id="_IDGenColumn46" width="8rem" showSortMenuEntry="true" sortProperty="DescFuente">
+                            <Label id="_IDGenLabel46" text="{i18n>DESCFUENTE}" tooltip="{i18n>ttDESCFUENTE}" />
+                            <t:template>
+                                <Text id="_IDGenText46" text="{oData>DescFuente}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <!--
+                        <t:Column id="_IDGenColumn30" width="8rem" showSortMenuEntry="true" sortProperty="CodForma">
+                            <Label id="_IDGenLabel30" text="{i18n>CODFORMA}" tooltip="{i18n>ttCODFORMA}" />
+                            <t:template>
+                                <Text id="_IDGenText30" text="{oData>CodForma}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                        <t:Column id="_IDGenColumn47" width="8rem" showSortMenuEntry="true" sortProperty="DescForma">
+                            <Label id="_IDGenLabel47" text="{i18n>DESCFORMA}" tooltip="{i18n>ttDESCFORMA}" />
+                            <t:template>
+                                <Text id="_IDGenText47" text="{oData>DescForma}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <!--
+                        <t:Column id="_IDGenColumn28" width="8rem" showSortMenuEntry="true" sortProperty="Zzltlrg">
+                            <Label id="_IDGenLabel28" text="{i18n>ZZLTLRG}" tooltip="{i18n>ttZZLTLRG}" />
+                            <t:template>
+                                <Text id="_IDGenText28" text="{oData>Zzltlrg}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                        <t:Column id="_IDGenColumn48" width="8rem" showSortMenuEntry="true" sortProperty="DescLtr">
+                            <Label id="_IDGenLabel48" text="{i18n>DESCLTR}" tooltip="{i18n>ttDESCLTR}" />
+                            <t:template>
+                                <Text id="_IDGenText48" text="{oData>DescLtr}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <!--
+                        <t:Column id="_IDGenColumn29" width="8rem" showSortMenuEntry="true" sortProperty="Zzboctm">
+                            <Label id="_IDGenLabel29" text="{i18n>ZZBOCTM}" tooltip="{i18n>ttZZBOCTM}" />
+                            <t:template>
+                                <Text id="_IDGenText29" text="{oData>Zzboctm}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                        <t:Column id="_IDGenColumn49" width="8rem" showSortMenuEntry="true" sortProperty="DescBct">
+                            <Label id="_IDGenLabel49" text="{i18n>DESCBCT}" tooltip="{i18n>ttDESCBCT}" />
+                            <t:template>
+                                <Text id="_IDGenText49" text="{oData>DescBct}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn39" width="8rem" showSortMenuEntry="true" sortProperty="Correlativo">
+                            <Label id="_IDGenLabel39" text="{i18n>CORRELATIVO}" tooltip="{i18n>ttCORRELATIVO}" />
+                            <t:template>
+                                <Text id="_IDGenText39" text="{oData>Correlativo}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <!--
+                        <t:Column id="_IDGenColumn14" width="8rem" showSortMenuEntry="true" sortProperty="Usr00">
+                            <Label id="_IDGenLabel14" text="{i18n>USR00}" tooltip="{i18n>ttUSR00}" />
+                            <t:template>
+                                <Text id="_IDGenText14" text="{oData>Usr00}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                        <t:Column id="_IDGenColumn32" width="8rem" showSortMenuEntry="true" sortProperty="Ernam">
+                            <Label id="_IDGenLabel32" text="{i18n>ERNAM}" tooltip="{i18n>ttERNAM}" />
+                            <t:template>
+                                <Text id="_IDGenText32" text="{oData>Ernam}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn33" width="8rem" showSortMenuEntry="true" sortProperty="Erdat">
+                            <Label id="_IDGenLabel33" text="{i18n>ERDAT}" tooltip="{i18n>ttERDAT}" />
+                            <t:template>
+                                <Text id="_IDGenText33" text="{ path : 'oData>Erdat',
+                                                                type : 'sap.ui.model.type.Date' }" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn34" width="8rem" showSortMenuEntry="true" sortProperty="Aenam">
+                            <Label id="_IDGenLabel34" text="{i18n>AENAM}" tooltip="{i18n>ttAENAM}" />
+                            <t:template>
+                                <Text id="_IDGenText34" text="{oData>Aenam}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn50" width="8rem" showSortMenuEntry="true" sortProperty="Aedat">
+                            <Label id="_IDGenLabel50" text="{i18n>AEDAT}" tooltip="{i18n>ttAEDAT}" />
+                            <t:template>
+                                <Text id="_IDGenText50" text="{ path : 'oData>Aedat',
+                                                                type : 'sap.ui.model.type.Date' }" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <!--
+                        <t:Column id="_IDGenColumn8" width="6rem" showSortMenuEntry="true" sortProperty="Campana">
+                            <Label id="_IDGenLabel8" text="{i18n>CAMPANA}" tooltip="{i18n>ttCAMPANA}" />
+                            <t:template>
+                                <Text id="_IDGenText8" text="{oData>Campana}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn13" width="12rem" showSortMenuEntry="true" sortProperty="Post1">
+                            <Label id="_IDGenLabel13" text="{i18n>POST1}" tooltip="{i18n>ttPOST1}" />
+                            <t:template>
+                                <Text id="_IDGenText13" text="{oData>Post1}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="_IDGenColumn36" width="8rem" showSortMenuEntry="true" sortProperty="Ffincos">
+                            <Label id="_IDGenLabel36" text="{i18n>FFINCOS}" tooltip="{i18n>ttFFINCOS}" />
+                            <t:template>
+                                <Text id="_IDGenText36" text="{ path : 'oData>Ffincos',
+                                                                type : 'sap.ui.model.type.Date' }" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        -->
+                    </t:columns>
+                    <t:footer>
+                        <Toolbar id="_IDGenToolbar1">
+                            <Label id="_IDGenLabel37" text="Cantidad Filas" />
+                            <Text id="txtCount" wrapping="false" />    
+                        </Toolbar>
+                     </t:footer>                   
+                </t:Table>
+            </Panel>
+        </content>
+    </Page>
+</mvc:View>
